@@ -1,7 +1,7 @@
 /** @format */
 
 import express from "express";
-import { startup } from './data/data.js'
+import { people } from './data.js'
 
 // const celebrity = {
 //   type: "action hero",
@@ -11,13 +11,13 @@ const PORT = 8000;
 
 const app = express();
 
-app.get("/", (req, res) => {
-    res.send("Server is running. Go to /api to see data.");
-});
+// app.get("/", (req, res) => {
+//     res.send("Server is running. Go to /api to see data.");
+// });
 
 app.get("/api", (req, res) => {
-  console.log("Root route hit");
-  res.json(startup);
+  console.log(req.query);
+  res.json(people);
 });
 
 
