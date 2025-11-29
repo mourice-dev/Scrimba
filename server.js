@@ -1,71 +1,71 @@
 /** @format */
 
 import express from "express";
-import { startups } from './data/data.js'
+import { startups } from "./data/data.js";
 
-// const celebrity = {
-//   type: "action hero",
-//   name: "nshut maurice",
-// };
 const PORT = 8000;
 
 const app = express();
 
-app.get("/", (req, res) => {
-    res.send("Server is running. Go to /api to see data.");
+app.get("/api", (req, res) => {
+  let filteredData = startups;
+
+  const { industry, country, continent, is_seeking_funding, has_mvp } =
+    req.query;
+
+  if (industry) {
+    filteredData = filteredData.filter(
+      (startup) => startup.industry.toLowerCase() === industry.toLowerCase()
+    );
+  }
+
+  if (country) {
+    filteredData = filteredData.filter(
+      (startup) => startup.country.toLowerCase() === country.toLowerCase()
+    );
+  }
+
+  if (continent) {
+    filteredData = filteredData.filter(
+      (startup) => startup.continent.toLowerCase() === continent.toLowerCase()
+    );
+  }
+
+  if (is_seeking_funding) {
+    filteredData = filteredData.filter(
+      (startup) =>
+        startup.is_seeking_funding ===
+        JSON.parse(is_seeking_funding.toLowerCase())
+    );
+  }
+
+  if (has_mvp) {
+    filteredData = filteredData.filter(
+      (startup) => startup.has_mvp === JSON.parse(has_mvp.toLowerCase())
+    );
+  }
+
+  res.json(filteredData);
 });
 
-app.get('/api', (req, res) => {
-  const fitleredData = startups;
+app.listen(PORT, () => console.log(`server connected on port ${PORT}`));
 
-  let {
-    industry,
-    country,
-    continent,
-    is_seeking_funding,
-    has_mvp
-  } = req.query;
+/*
+Challenge:
+1. When a user hits the /api endpoint with query params, filter the data so 
+we only serve objects that meet their requirements. 
+     
+The user can filter by the following properties:
+  industry, country, continent, is_seeking_funding, has_mvp
 
-  const toBool = (value) => (value === "true" ? true : value === "false" ? false : undefined )
+Test Cases
 
-has_mvp = toBool(has_mvp);
-is_seeking_funding = toBool(is_seeking_funding);
+/api?industry=renewable%20energ y&country=germany&has_mvp=true
+  Should get the "GreenGrid Energy" object.
 
-if (has_mvp !== undefined) {
-  fitleredData = fitleredData.filter((item) => {
-    item.has_mvp === has_mvp
-  })
-}
-if (is_seeking_funding !== undefined) {
-  fitleredData = fitleredData.filter((item) => {
-    item.is_seeking_funding === is_seeking_funding
-  })
-}
-if (industry) {
-  fitleredData = fitleredData.filter((item) => {
-     item.industry.toLowerCase() === industry.toLowerCase()
-  })
-}
-if (country) {
-  fitleredData = fitleredData.filter((item) => {
-     item.country.toLowerCase() === country.toLowerCase()
-  })
-}
-if (continent) {
-  fitleredData = fitleredData.filter((item) => {
-    item.continent.toLowerCase() === continent.toLowerCase()
-  })
-}
-  
-  res.json(startups)
-})
+/api?industry=renewable%20energy&country=germany&has_mvp=false
+  Should not get any object
 
-// app.get("/api/user/:id", (req, res) => {
-//   console.log(req.params.id)
-//   res.json(req.params.id)
-//   });
-
-
-app.listen(PORT, () => {
-  console.log(`server connected! ${PORT}`);
-});
+/api?continent=asia&is_seeking_funding=true&has_mvp=true
+  should get for objects with IDs 3, 22, 26, 29
+*/
