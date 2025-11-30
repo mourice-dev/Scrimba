@@ -1,24 +1,43 @@
-/** @format */
 
 import express from "express";
-import { startups } from "./data/data.js";
-import { productersController } from "./controllers/productersController.js";
-import {apiRoute} from "./routes/apiRoute.js"
+import { apiRouter } from "./routes/apiRoutes.js";
 
 const PORT = 8000;
 
+/*
+Challenge:
+1. Refactor the code to use express.Router()
+*/
+
 const app = express();
 
-
-app.use('/api', apiRoute)
-
-app.use((req, res) => {
-  res.status(404).json({
-    data: 'endpoint not found'
-  })
-})
+app.use("/api", apiRouter);
 
 app.listen(PORT, () => console.log(`server connected on port ${PORT}`));
+
+
+
+// /** @format */
+
+// import express from "express";
+// import { startups } from "./data/data.js";
+// import { productersController } from "./controllers/productersController.js";
+// import {apiRoute} from "./routes/apiRoute.js"
+
+// const PORT = 8000;
+
+// const app = express();
+
+
+// app.use('/api', apiRoute)
+
+// app.use((req, res) => {
+//   res.status(404).json({
+//     data: 'endpoint not found'
+//   })
+// })
+
+// app.listen(PORT, () => console.log(`server connected on port ${PORT}`));
 
 // app.get("/api", (req, res) => {
 //   let filteredData = startups;
