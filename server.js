@@ -1,21 +1,38 @@
+/** @format */
 
 import express from "express";
 import { apiRouter } from "./routes/apiRoutes.js";
 
 const PORT = 8000;
-
-/*
-Challenge:
-1. Refactor the code to use express.Router()
-*/
-
 const app = express();
 
+// 1️⃣ Valid API routes
 app.use("/api", apiRouter);
+
+// 2️⃣ Catch-all 404 (must be last!)
+app.use((req, res) => {
+  res.status(404).json({
+    message: "Endpoint not found. Please check the API documentation.",
+  });
+});
 
 app.listen(PORT, () => console.log(`server connected on port ${PORT}`));
 
+// import express from "express";
+// import { apiRouter } from "./routes/apiRoutes.js";
 
+// const PORT = 8000;
+
+// /*
+// Challenge:
+// 1. Refactor the code to use express.Router()
+// */
+
+// const app = express();
+
+// app.use("/api", apiRouter);
+
+// app.listen(PORT, () => console.log(`server connected on port ${PORT}`));
 
 // /** @format */
 
@@ -27,7 +44,6 @@ app.listen(PORT, () => console.log(`server connected on port ${PORT}`));
 // const PORT = 8000;
 
 // const app = express();
-
 
 // app.use('/api', apiRoute)
 
@@ -99,13 +115,12 @@ Test Cases
   should get for objects with IDs 3, 22, 26, 29
 */
 
-
 // import express from "express";
 
 // const app = express();
 
 // /*
-// Challenge: 
+// Challenge:
 // 1. Update the code so a GET request to api/metals/gold
 //     logs an object {category: ‘metals’, type: ‘gold’}
 
