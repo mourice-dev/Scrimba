@@ -1,31 +1,41 @@
 /** @format */
+import { getDBConnection } from "../db/db.js";
 
 export async function getGenres(req, res) {
-  console.log("genres");
-  res.send("genres");
+
+  try {
+    /*
+Challenge:
+
+1. Get all distinct genres (no repeats) from the products table.
+
+  - Our front end code is expecting an array of genres as strings, but you will likely get an array of objects from the database. Find a solution to that!
+
+2. Serve the array of genres and open up the mini browser to check the dropdown is populated.
+
+hint.md for help  
+*/
+    const db = await getDBConnection();
+    
+    const selectGnres = await db.all("SELECT DISTINCT genre FROM products");
+    
+    const genres = selectGnres.map(g => g.genre);
+   
+    
+    console.table(genres);
+
+    res.json(genres);
+    
+  } catch (err) {
+    res
+      .status(500)
+      .json({ error: "Failed to fetch genres", details: err.message });
+  }
 }
 
-export async function getProducts(req, res) {
+export async function getProducts() {
   console.log("products");
-  res.send("products");
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

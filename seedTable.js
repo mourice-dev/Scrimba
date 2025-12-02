@@ -25,7 +25,7 @@ async function seedTable() {
   */
 
   try {
-    db.exec("BEGIN TRANSACTION");
+    await db.exec("BEGIN TRANSACTION");
     for (const {title,artist,price,image,year,genre,stock} of vinyl) {
       await db.run(
         "INSERT INTO products (title,artist,price,image,year,genre,stock) VALUES (?,?,?,?,?,?,?)",
@@ -33,10 +33,10 @@ async function seedTable() {
       );
     }
 
-    db.exec("COMMIT");
+   await db.exec("COMMIT");
     console.log("All records inserted successfully.");
   } catch (err) {
-    db.exec("ROLLBACK");
+   await db.exec("ROLLBACK");
     console.error("Error inserting data:", err.message);
   } finally {
     await db.close();

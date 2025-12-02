@@ -12,7 +12,20 @@ async function viewAllProducts() {
 
   try {
     const products = await db.all("SELECT * FROM products");
-    console.table(products);
+    const display = products.map(({
+      title,
+      artist,
+      price,
+      image,
+      year,
+      genre,
+      stock,
+    }) => {
+      return { title, artist, price, image, year, genre, stock };
+      
+    });
+
+    console.table(display);
   } catch (err) {
     console.error("Error fetching products:", err.message);
   } finally {
