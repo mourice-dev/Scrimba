@@ -1,0 +1,3 @@
+- You will need to set up an instance of express.Router().
+- Call the get() method on it and pass in a route and a function to call.
+- Watch out for the pitfall where the routes specified in server.js and productRouter.js overlap!

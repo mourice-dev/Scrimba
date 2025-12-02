@@ -11,3 +11,13 @@
  *
  * @format
  */
+
+import express from "express";
+import { getProducts, getGenres } from "../controllers/productersControllers.js";
+
+const productsRouter = express.Router();
+
+productsRouter.get("/", getProducts);
+productsRouter.get("/genres", getGenres);
+
+export default productsRouter;

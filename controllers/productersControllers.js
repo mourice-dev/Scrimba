@@ -8,6 +8,37 @@ export async function getProducts() {
   console.log("products");
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // /** @format */
 // import { startups } from "../data/data.js";
 

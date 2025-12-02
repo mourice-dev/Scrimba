@@ -3,12 +3,12 @@
 /** @format */
 
 import express from "express";
+import productsRouter from "./routes/products.js";
 
 const app = express();
 const PORT = 8000;
 
 app.use(express.static("public"));
-
 /*
 Challenge 2:
 
@@ -18,6 +18,7 @@ Challenge 2:
   You should see the results of the console.logs from productsControllers.js
 
 */
+
 
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
@@ -41,7 +42,7 @@ app.listen(PORT, () => {
 
 
 
-  
+
 // /** @format */
 
 // import express from "express";
