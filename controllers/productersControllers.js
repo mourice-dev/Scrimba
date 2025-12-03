@@ -32,20 +32,14 @@ hint.md for help
 
 Example incoming query: '?genre=rock'
 */
-    const genre = req.query;
-    genre.map((g) => g.genre);
+    const { genre } = req.query;
 
-    if (genre === "/genres") {
-
-     query = "SELECT genre FROM products";
-      const products = await db.all(query);
-      res.json(products);
-
-    } else {
-      
-      const products = await db.all(query);
-      res.json(products);
+    if (genre) {
+      query = `SELECT * FROM products WHERE genre = '${genre}'`;
     }
+
+    const products = await db.all(query);
+    res.json(products);
   } catch (err) {
     res
       .status(500)
